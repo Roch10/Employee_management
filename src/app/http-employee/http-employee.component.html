@@ -1,0 +1,145 @@
+<div class="container" *ngIf="loading" >
+  Loading...
+</div>
+<div class="container" *ngIf="!loading">
+  
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-striped">
+        <thead>
+          <th>S.N.</th>
+          <th>Name</th>
+          <th>Address</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Date of Birth</th>
+          <th>Gender</th>
+          <th>Designation</th>
+          <th colspan="2" style="text-align: center">Actions <br> <small>Edit/Delete</small> </th>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let a of employees; let i = index">
+            <td> {{ i + 1}}. </td>
+            <td>{{ a.name }} </td>
+            <td>{{ a.address }} </td>
+            <td>{{ a.email }} </td>
+            <td> {{ a.phone }} </td>
+            <td>{{ a.dob }} </td>
+            <td>{{ a.gender }} </td>
+            <td>{{ a.designationId }} </td>
+            <td>
+                <button class="btn btn-info" data-toggle="modal" data-target="#addEmployeeModal" (click)="onEdit(i)" >Edit</button>
+            </td>
+            <td>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#SuccessModal" (click)="onDelete(i)" >Delete</button>
+            </td>
+            
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <div class="row">
+
+    <!-- Button trigger modal -->
+    <button class="btn btn-info" data-toggle="modal" data-target="#addEmployeeModal" (click)="allowEdit = false" >Add Employee</button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addEmployeeModalLabel" *ngIf="!allowEdit">Add Employee</h5>
+            <h5 class="modal-title" id="addEmployeeModalLabel" *ngIf="allowEdit">Edit Employee</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <form #addEmployeeForm="ngForm">            
+                  <div class="form-group">
+                      <label for="ID">Name: </label>
+                      <input type="text" class="form-control" [(ngModel)]="name" name="name">
+                  </div>
+            
+                  <div class="form-group">
+                      <label for="address">Address: </label>
+                      <input type="text" class="form-control" [(ngModel)]="address" name="address">
+                  </div>
+            
+                  <div class="form-group">
+                      <label for="phone">Phone: </label>
+                      <input type="tel" class="form-control" [(ngModel)]="phone" name="phone" pattern="[0-9]{10}" >
+                  </div>
+            
+                  <div class="form-group">
+                      <label for="email">Email: </label>
+                      <input type="email" class="form-control" [(ngModel)]="email" name="email"> 
+                  </div>
+            
+                  <div class="form-group">
+                      <label for="dob">Date Of Birth: </label>
+                      <my-date-picker name="mydate" [options]="myDatePickerOptions"
+                  [(ngModel)]="model" required showTodayBtn="true" todayBtnTxt="test" #vDOB="ngModel" placeholder="dd/mm/yyyy" ></my-date-picker>
+                      <!-- <input type="date" class="form-control datepicker" [(ngModel)]="dob" name="dob"> -->
+                  </div>
+            
+                  <div class="form-group">
+                      <label for="gender">Gender: </label>
+                      <select class="form-control" [(ngModel)]="gender" name="gender">
+                          <option value="M"> Male </option>  
+                          <option value="F"> Female </option>
+                          <option value="O"> Other </option>
+                      </select>
+                  </div>
+            
+                  <label for="designation"> Designation: </label>
+                  <select class="form-control" [(ngModel)]="designationID" name="designationID">
+                      <option value="101"> Manager </option>  
+                      <option value="102"> Assistant </option> 
+                      <option value="103"> Receptionist </option> 
+                      <option value="104"> Sales </option> 
+                  </select>
+                </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="addEmpForm.reset();" >Cancel</button>
+            <button type="button" class="btn btn-info" data-dismiss="modal" data-toggle="modal" data-target="#SuccessModal" (click)="onAdd()" *ngIf="!allowEdit" >Add Employee</button>
+            <button type="button" class="btn btn-info" data-dismiss="modal" (click)="onUpdate()" *ngIf="allowEdit" >Update</button>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+
+     <!-- Modal -->
+     <div class="modal fade" id="SuccessModal" tabindex="-1" role="dialog" aria-labelledby="SuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <p *ngIf="!alert" style="color: green; font-weight: bold">Sucessful</p> 
+              <p *ngIf="alert" style="color: red; font-weight: bold">Alert</p> 
+            </div>
+            
+            <div class="modal-body">
+              <p *ngIf="!alert">
+                  {{ message }}
+              </p>
+              <p *ngIf="alert" >Are you sure you want to delete?</p>
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" data-dismiss="modal" *ngIf="!alert">Ok</button>
+              <button class="btn btn-success" *ngIf="alert" (click)="deleteEmployee(true)" data-dismiss="modal">Yes</button>
+              <button class="btn btn-danger" *ngIf="alert" (click)="deleteEmployee(false)" data-dismiss="modal" >No</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+</div>
+

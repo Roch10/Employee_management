@@ -1,0 +1,35 @@
+.footer {
+    background-color: rgb(23, 162, 184);
+    color: white;
+    padding-left: 20px;
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+    height: 100px;
+}
+
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.container-fluid {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 110px;
+}
+
+
+  /* .footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #efefef;
+    text-align: center;
+  } */

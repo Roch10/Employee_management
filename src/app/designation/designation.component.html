@@ -1,0 +1,106 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <!-- Designation Table -->
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>S.N.</th>
+                <th>Designation</th>
+                <th>Rate</th>
+                <th colspan="2" style="text-align: center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of designation; let i = index" >
+                <td> {{ i+1 }} .</td>
+
+                <td> {{ a.designation }} </td>
+                <td><bar-rating [rate]="a.rate" [max]="5" [theme]="'vertical'" [readOnly]="true" ></bar-rating></td>
+
+                <td><button class="btn btn-info" (click)="onEdit(i)" data-toggle="modal" data-target="#editDesignation"> Edit</button></td>
+
+                <td ><button class="btn btn-danger" (click)="onDelete(i)" >Delete</button></td>
+                
+
+                <!-- Add and Edit Designation Modal -->
+                <div class="modal fade" id="editDesignation" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="editLabel" *ngIf="!allowAdd" >Edit Designation Details</h5>
+                          <h5 class="modal-title" id="addLabel" *ngIf="allowAdd" >Add New Designation</h5>
+
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <dir class="form-inline">
+                            <p>
+                              Designation:
+                              <input type="text" class="form-control add-input" [(ngModel)]="editDes" placeholder="Designation" *ngIf="!allowAdd">
+                              <input type="text" class="form-control add-input" name="des" [(ngModel)]="des" placeholder="Designation" *ngIf="allowAdd">
+
+                            </p>
+                          </dir>
+                          <div class="form-inline" style="padding-left: 93px;">
+                              <label for="rate">Rate:</label>
+                              <bar-rating [(rate)]="rate" [max]="5" [theme]="'vertical'" style="margin-left: 50px"></bar-rating>    
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-info" data-dismiss="modal" (click)="onSave(editID)" *ngIf="!allowAdd">Save</button>
+                            <button class="btn btn-danger"  data-dismiss="modal" *ngIf="!allowAdd">Cancel</button>
+
+                            <button class="btn btn-info" (click)="onAdd()" data-dismiss="modal" *ngIf="allowAdd">Add</button>
+                            <button class="btn btn-danger" (click)="onCancelAdd()" data-dismiss="modal" data-dismiss="modal" *ngIf="allowAdd">Cancel</button>
+            
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+
+  <div class="row add">
+
+      <button type="button" class="btn btn-dark" (click)="onAddDes()" data-toggle="modal" data-target="#editDesignation"  >
+        Add New Designation
+      </button> 
+      <!-- <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#addDesignation" (click)="onAddDes()" >
+        Add New Designation
+      </button> -->
+
+      <!-- Add Designation Modal -->
+      <!-- <div class="modal fade" id="addDesignation" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addLabel">Add New Designation</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <dir class="form-inline">                
+                <input type="text" class="form-control add-input" name="des" [(ngModel)]="des" placeholder="Designation">
+              </dir>
+  
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-info" (click)="onAdd()" data-dismiss="modal">Add</button>
+                <button class="btn btn-danger" (click)="onCancelAdd()" data-dismiss="modal" data-dismiss="modal">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>   -->
+
+    </div>
+</div>

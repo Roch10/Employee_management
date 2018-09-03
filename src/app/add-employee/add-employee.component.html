@@ -1,0 +1,112 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+    <h1  *ngIf="!editMode"  style="text-align: center">Add a New Employee</h1>
+    <h1 *ngIf="editMode" style="text-align: center">Edit Employee Details</h1>
+      <hr>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <form #employeeForm="ngForm" >            
+            <div class="form-group">
+                <label for="ID">Name: </label>
+                <input type="text" class="form-control" [(ngModel)]="name" name="name" autocomplete="off" required #vName="ngModel" >
+                <div *ngIf="vName.invalid && (vName.dirty || vName.touched)" class="validate">
+                    Name is required.
+                </div>
+                <!-- <div *ngIf="!employeeForm.form.valid && vName.invalid" >
+                    Name is required.
+                </div> -->
+               
+            </div>
+      
+            <div class="form-group">
+                <label for="address">Address: </label>
+                <input type="text" class="form-control" [(ngModel)]="address" name="address" autocomplete="off" required #vAddress="ngModel" >
+                <div *ngIf="vAddress.invalid && (vAddress.dirty || vAddress.touched)" class="validate">
+                        Address is required.
+                </div>
+                <!-- <div *ngIf="!employeeForm.form.valid && vAddress.invalid" >
+                        Address is required.
+                    </div> -->
+                
+                
+            </div>
+      
+            <div class="form-group">
+                <label for="phone">Phone: </label>
+                <input type="tel" class="form-control" [(ngModel)]="phone" name="phone" autocomplete="off" #vPhone="ngModel" pattern="[0-9]{10}" >
+                
+                <div *ngIf="vPhone.invalid" class="validate" >
+                        Phone number must be 10 digits.
+                </div>
+                
+            </div>
+      
+            <div class="form-group">
+                <label for="email">Email: </label>
+                <input type="email" class="form-control" [(ngModel)]="email" name="email" autocomplete="off" required #vEmail="ngModel" pattern=".+@+.+.com" >
+                <div *ngIf="vEmail.invalid && (vEmail.dirty || vEmail.touched)">
+                    <div *ngIf="vEmail.errors.required" class="validate">
+                            E-mail is required
+                    </div>
+                    <div *ngIf="vEmail.errors.pattern" class="validate">
+                            E-mail must be in the form of "john@example.com".
+                    </div>
+                        
+                </div>
+                <!-- <div *ngIf="!employeeForm.form.valid && vEmail.invalid" >
+                        Email is required.
+                    </div> -->
+                
+            </div>
+      
+            <div class="form-group">
+                <label for="dob">Date Of Birth: </label>
+                <input type="date" class="form-control datepicker" [(ngModel)]="dob" name="dob" autocomplete="off" required #vDOB="ngModel" >
+                <div *ngIf="vDOB.invalid && (vDOB.dirty || vDOB.touched)" class="validate">
+                        Date of Birth is required.
+                </div>
+                <!-- <div *ngIf="!employeeForm.form.valid && vName.invalid" >
+                        Date Of Birth is required.
+                    </div> -->
+                
+            </div>
+      
+            <div class="form-group">
+                <label for="gender">Gender: </label>
+                <select class="form-control" [(ngModel)]="gender" name="gender" required #vGender="ngModel" >
+                    <option value="M" [selected]="selectedDes" > Male </option>  
+                    <option value="F"> Female </option>
+                    <option value="O"> Other </option>
+                </select>
+                <div *ngIf="vGender.invalid && (vGender.dirty || vGender.touched)" class="validate">
+                        Gender is required.
+                </div>
+                <!-- <div *ngIf="!employeeForm.form.valid && vGender.invalid" >
+                        Gender is required.
+                    </div> -->
+               
+            </div>
+      
+            <label for="designation"> Designation: </label>
+            <select class="form-control" [(ngModel)]="des" name="des" required #vDesignation="ngModel" >
+                <option *ngFor="let a of designation" [selected]="selectedDes" > {{ a.designation }} </option>  
+            </select>
+            <div *ngIf="vDesignation.invalid && (vDesignation.dirty || vDesignation.touched)" class="validate">
+                    Designation must be chosen.
+            </div>
+            <!-- <div *ngIf="!employeeForm.form.valid && vDesignation.invalid" >
+                    Designation is required.
+                </div> -->
+          
+            <button class="btn btn-info" (click)="employeeForm.form.valid && onAdd()" *ngIf="!editMode" [disabled]="!employeeForm.form.valid" > Add Employee</button>
+            <button class="btn btn-info"  *ngIf="editMode" (click)="employeeForm.form.valid && onSave()" > Save </button>
+            <button class="btn btn-danger" routerLink="/employees" (click)="employeeForm.reset()" > Cancel</button>
+          </form>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>

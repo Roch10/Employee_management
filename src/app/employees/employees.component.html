@@ -1,0 +1,94 @@
+<div class="container">
+  <div class="row search-bar">
+    <div class="col-md-8">
+      <form class="form-inline">
+         <input type="text" class="form-control" name="search" [(ngModel)] = "empName" placeholder="Search Here" style="width: 500px;">
+    
+        <!-- <button class="btn btn-info" routerLink='/add-employee' >Add Employee</button> -->
+        <button class="btn btn-info" data-toggle="modal" data-target="#editEmployee" (click)="onAdd()" style="margin-left: 20px"> Add Employee </button>
+        <!-- <button (click)="sortTable('name')" >Sort</button> -->
+      </form>
+     
+    </div>
+
+    <div class="col-md-4">
+        <form class="form-inline">
+            <label for="sorting">Sort By:&nbsp; &nbsp; &nbsp;</label>
+            <select name="sorting" id="" class="form-control" [(ngModel)]="sortBy" > 
+              <option value="name" >Name</option>
+              <option value="address">Address</option>
+              <option value="gender">Gender</option>
+            </select>
+            <button class="btn btn-info" (click)="onSort()" style="margin-left: 20px">Sort</button>
+          </form>
+    </div>
+  </div>
+  <!-- <div class="row search-bar">
+      <div class="col-md-12">
+        
+      </div>
+        
+    </div> -->
+  <div class="row">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th> S.N </th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Date Of Birth</th>
+            <th>Gender</th>
+            <th>Designation</th>
+            <th>Ratings</th>
+            <th colspan="2" style="text-align: center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let employee of employees | filter:empName | sortData:path:order; let i = index;" appHighlight > 
+            <td> {{i+1}} .</td>
+            <td> {{employee.name}} </td>
+            <td> {{employee.address}} </td>
+            <td> {{employee.phone}} </td>
+            <td> {{employee.email}} </td>
+            <td> {{employee.dob}} </td>
+            <td> {{employee.gender}} </td>
+            <td> {{actualDes[i]}} </td>
+            <td><bar-rating [max]="5" [readOnly]="true" [rate]="employee.rate" ></bar-rating></td>
+            <td> <button class="btn btn-info" data-toggle="modal" data-target="#editEmployee" (click)="onEdit(i)" > Edit </button> </td>
+            <!-- <td> <button class="btn btn-info" [routerLink]="['/edit-employee/' + a.id] " data-target="#editEmployee" > Edit </button> </td> -->
+
+            <td> <button class="btn btn-danger" (click)= "onDelete(i, employee.name)" >Delete</button> </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Edit Employee Modal -->
+      <div class="modal fade" id="editEmployee" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <!-- <div class="modal-header">
+                <h5 class="modal-title" id="addLabel" *ngIf="allowEdit">Edit Employee Details</h5>
+                <h5 class="modal-title" id="addLabel" *ngIf="!allowEdit">Add Employee Details</h5>
+                
+              </div> -->
+              <div class="modal-body">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onCancel()" >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    
+                  <app-edit-employee *ngIf="allowPopUp" [getID]="passID" (close)="onClose($event)" ></app-edit-employee>
+    
+              </div>
+              <!-- <div class="modal-footer">
+                  <button class="btn btn-info" (click)="onAdd()"  [disabled]='!allowAdd' data-dismiss="modal">Save</button>
+                  <button class="btn btn-danger" (click)="onCancelAdd()" data-dismiss="modal" data-dismiss="modal">Cancel</button>
+              </div> -->
+            </div>
+          </div>
+        </div>  
+      
+
+    </div>
+ </div>

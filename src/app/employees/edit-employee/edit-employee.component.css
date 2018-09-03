@@ -1,0 +1,21 @@
+button{
+    margin: 10px;
+}
+
+.validate{
+    color: #f30019;
+    font-size: 14px;
+}
+
+.validate:before{
+    content: "*";
+}
+
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,.1);
+    width: 615px;
+    margin-left: -150px;
+}
